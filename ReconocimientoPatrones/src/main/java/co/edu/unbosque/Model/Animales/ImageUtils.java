@@ -55,6 +55,12 @@ public class ImageUtils {
         }
     }
 
+    public BufferedImage whiteBlackBuffer(BufferedImage image) {
+        Image resizedImage = image.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
+        image = toBufferedImage(resizedImage);
+        return convertOp.filter(image, null);
+    }
+
     /**
      * Generates an ArrayList of black and white images from the images located in the given path.
      *

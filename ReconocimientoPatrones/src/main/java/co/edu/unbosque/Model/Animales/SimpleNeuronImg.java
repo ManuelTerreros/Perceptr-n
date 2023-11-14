@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class SimpleNeuronImg {
-    private final double[] weights;
+    private double[] weights;
 
     public SimpleNeuronImg(int weightCount) {
         Random random = new Random();
@@ -21,8 +21,9 @@ public class SimpleNeuronImg {
      * @param inputs       the input data for training
      * @param targets      the target values for training
      * @param learningRate the learning rate for adjusting weights
+     * @return the number of iterations
      */
-    public void train(double[][] inputs, double[] targets, double learningRate) {
+    public int train(double[][] inputs, double[] targets, double learningRate) {
         boolean ok = false;
         int iterations = 0;
         while (!ok) {
@@ -54,7 +55,7 @@ public class SimpleNeuronImg {
         }
         System.out.println("Final weights: " + Arrays.toString(weights));
         System.out.println("Iterations: " + iterations);
-
+        return iterations;
     }
 
     /**
@@ -73,6 +74,14 @@ public class SimpleNeuronImg {
             }
         }
         return sum;
+    }
+
+    public double[] getWeights() {
+        return weights;
+    }
+    public void setWeights(double[] weights) {
+        this.weights = weights;
+
     }
 
 }
