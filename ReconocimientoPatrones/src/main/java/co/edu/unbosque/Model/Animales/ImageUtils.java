@@ -8,16 +8,14 @@ import java.awt.image.ColorConvertOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ImageUtils {
 
     private final ColorConvertOp convertOp;
-    private final int[][] SOBELY = {
-            {-1, -2, -1},
-            {0, 0, 0},
-            {1, 2, 1}
-    };
     private int number;
+    private ArrayList<Double> labels;
 
     public ImageUtils() {
         convertOp = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
@@ -37,42 +35,6 @@ public class ImageUtils {
         return bufferedImage;
     }
 
-    /**
-     * Downsamples an image by averaging the pixel values of each 2x2 block.
-     *
-     * @param image the BufferedImage to be downsampled
-     * @return the downsampled BufferedImage
-     */
-    public BufferedImage downAverage(BufferedImage image) {
-        BufferedImage resultImage = new BufferedImage(image.getWidth() / 2, image.getHeight() / 2, BufferedImage.TYPE_BYTE_GRAY);
-        for (int i = 0; i < image.getWidth(); i += 2) {
-            for (int j = 0; j < image.getHeight(); j += 2) {
-                int pixel = (image.getRGB(i, j) + image.getRGB(i + 1, j) + image.getRGB(i, j + 1) + image.getRGB(i + 1, j + 1)) / 4;
-                resultImage.setRGB(i / 2, j / 2, (pixel << 16) | (pixel << 8) | pixel);
-            }
-        }
-        return resultImage;
-    }
-
-    /**
-     * Apply a filter to a specific pixel in an image.
-     *
-     * @param image  the image to apply the filter to
-     * @param x      the x-coordinate of the pixel
-     * @param y      the y-coordinate of the pixel
-     * @param filter the filter to apply
-     * @return the filtered pixel value
-     */
-    public int applyFilter(BufferedImage image, int x, int y, int[][] filter) {
-        int result = 0;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                int pixelValue = image.getRGB(x + i, y + j) & 0xFF;
-                result += pixelValue * filter[i + 1][j + 1];
-            }
-        }
-        return Math.min(255, Math.max(0, result));
-    }
 
     /**
      * Reads an image from a file, resizes it to 128x128 pixels using a smooth scaling algorithm,
@@ -105,14 +67,21 @@ public class ImageUtils {
         try {
             File folder = new File(path);
             File[] files = folder.listFiles();
+            ArrayList<File> paths = new ArrayList<>();
+            labels = new ArrayList<>();
+            assert files != null;
             for (File file : files) {
+                paths.addAll(List.of((file.listFiles())));
+            }
+            Collections.shuffle(paths);
+            for (File file : paths) {
                 BufferedImage image = ImageIO.read(file);
                 Image resizedImage = image.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
                 image = toBufferedImage(resizedImage);
                 images.add(convertOp.filter(image, null));
+                labels.add(Double.parseDouble(file.getName().split("\\.")[0].split("_")[1]));
                 number++;
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,5 +90,9 @@ public class ImageUtils {
 
     public int getNumber() {
         return number;
+    }
+
+    public ArrayList<Double> getLabels() {
+        return labels;
     }
 }

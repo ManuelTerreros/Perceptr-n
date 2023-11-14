@@ -1,42 +1,48 @@
 package co.edu.unbosque.Model.Animales;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.UUID;
 
-
+@RestController
 public class Controller {
     private final ImageUtils imageUtils;
+    private double[] etiquetas;
     private double[][] entradas;
 
-    
     public Controller() {
         imageUtils = new ImageUtils();
-        double[] etiquetas = new double[]{0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1,
-                1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
-        addModel();
-        SimpleNeuron sn = new SimpleNeuron(16385);
-        sn.train(entradas, etiquetas, 0.0001); // Menor valor de learning rate mejora la predicción, mayor valor de learning rate mejora la velocidad
-        File folder = new File("Examples");
-        File[] files = folder.listFiles();
-        for (File file : files) {
-            if (sn.predict(singleImage(imageUtils.whiteBlackSingle(file.getPath()))) <= 0) {
-                System.out.println(file.getName() + ": No es un animal");
-            } else {
-                System.out.println(file.getName() + ": Es un animal");
-            }
-            System.out.println(sn.predict(singleImage(imageUtils.whiteBlackSingle(file.getPath()))));
-        }
+        addModel2("AnimalesObjetos", 0.0001);
+
     }
 
-    /**
-     * Generates an array of normalized pixel values from a given image.
-     *
-     * @param image the BufferedImage object representing the image
-     * @return an array of normalized pixel values
-     */
+    @PostMapping(value = "/uploadImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadImage(@RequestPart("image") MultipartFile image, @RequestParam("folder") String folder, @RequestParam("label") int label) {
+        String newFileName = folder + "/" + UUID.randomUUID() + "_" + label;
+        Path filePath = Paths.get(newFileName);
+        try {
+            Files.write(filePath, image.getBytes());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok(newFileName);
+    }
+
     public double[] singleImage(BufferedImage image) {
-        // image = imageUtils.applySobel(image);
         double[] pixels = image.getRaster().getPixels(0, 0, image.getWidth(), image.getHeight(), (double[]) null);
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = pixels[i] / 255;
@@ -44,11 +50,31 @@ public class Controller {
         return pixels;
     }
 
-    /**
-     * Adds a model by creating it using the provided image directory.
-     */
-    public void addModel() {
-        createModel(convert("src/main/resources/static"));
+
+    @PostMapping("/addModel")
+    public void addModel(@RequestParam("folder") String folder, @RequestParam("learningRate") double learningRate) {
+        createModel(convert("images/" + folder));
+        etiquetas = imageUtils.getLabels().stream().mapToDouble(Double::doubleValue).toArray();
+        SimpleNeuronImg sn = new SimpleNeuronImg(16385);
+        sn.train(entradas, etiquetas, learningRate); // Menor valor de learning rate mejora la predicción, mayor valor de learning rate mejora la velocidad
+    }
+
+    public void addModel2(String folder, double learningRate) {
+        createModel(convert("images/" + folder));
+        etiquetas = imageUtils.getLabels().stream().mapToDouble(Double::doubleValue).toArray();
+        SimpleNeuronImg sn = new SimpleNeuronImg(16385);
+        sn.train(entradas, etiquetas, learningRate); // Menor valor de learning rate mejora la predicción, mayor valor de learning rate mejora la velocidad
+        File ot = new File("images/Examples");
+        File[] files = ot.listFiles();
+        assert files != null;
+        for (File file : files) {
+            if (sn.predictImg(singleImage(imageUtils.whiteBlackSingle(file.getPath()))) <= 0) {
+                System.out.println(file.getName() + ": No es un animal");
+            } else {
+                System.out.println(file.getName() + ": Es un animal");
+            }
+            System.out.println(sn.predictImg(singleImage(imageUtils.whiteBlackSingle(file.getPath()))));
+        }
     }
 
     /**

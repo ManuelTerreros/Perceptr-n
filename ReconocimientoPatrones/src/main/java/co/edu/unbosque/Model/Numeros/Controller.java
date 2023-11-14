@@ -2,13 +2,13 @@ package co.edu.unbosque.Model.Numeros;
 
 
 public class Controller {
-    private final SimpleNeuron neuron;
+    private final SimpleNeuronNumber neuron;
 
     public Controller() {
-        double[] objectic = {0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3,0};
-        neuron = new SimpleNeuron(26);
-        
-        Number number0 = new Number();
+        double[] objectic = {0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 0};
+        neuron = new SimpleNeuronNumber(26);
+
+        co.edu.unbosque.Model.Numeros.Number number0 = new co.edu.unbosque.Model.Numeros.Number();
         number0.setNumber(0, 0);
         number0.setNumber(0, 1);
         number0.setNumber(0, 2);
@@ -26,7 +26,7 @@ public class Controller {
         number0.setNumber(4, 3);
         number0.setNumber(4, 4);
 
-        Number number1 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number1 = new co.edu.unbosque.Model.Numeros.Number();
         number1.setNumber(0, 1);
         number1.setNumber(0, 2);
         number1.setNumber(0, 3);
@@ -40,7 +40,7 @@ public class Controller {
         number1.setNumber(4, 2);
         number1.setNumber(4, 3);
 
-        Number number2 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number2 = new co.edu.unbosque.Model.Numeros.Number();
         number2.setNumber(0, 2);
         number2.setNumber(1, 2);
         number2.setNumber(2, 2);
@@ -52,7 +52,7 @@ public class Controller {
         number2.setNumber(4, 3);
         number2.setNumber(4, 4);
 
-        Number number3 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number3 = new co.edu.unbosque.Model.Numeros.Number();
         number3.setNumber(0, 0);
         number3.setNumber(0, 1);
         number3.setNumber(0, 2);
@@ -65,7 +65,7 @@ public class Controller {
         number3.setNumber(4, 3);
         number3.setNumber(4, 4);
 
-        Number number4 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number4 = new co.edu.unbosque.Model.Numeros.Number();
         number4.setNumber(0, 0);
         number4.setNumber(0, 1);
         number4.setNumber(0, 2);
@@ -74,14 +74,14 @@ public class Controller {
         number4.setNumber(3, 2);
         number4.setNumber(4, 2);
 
-        Number number5 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number5 = new co.edu.unbosque.Model.Numeros.Number();
         number5.setNumber(0, 2);
         number5.setNumber(1, 2);
         number5.setNumber(2, 2);
         number5.setNumber(3, 2);
         number5.setNumber(4, 2);
 
-        Number number6 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number6 = new co.edu.unbosque.Model.Numeros.Number();
         number6.setNumber(0, 1);
         number6.setNumber(0, 2);
         number6.setNumber(0, 3);
@@ -95,7 +95,7 @@ public class Controller {
         number6.setNumber(4, 3);
         number6.setNumber(4, 4);
 
-        Number number7 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number7 = new co.edu.unbosque.Model.Numeros.Number();
         number7.setNumber(0, 1);
         number7.setNumber(0, 2);
         number7.setNumber(0, 3);
@@ -109,7 +109,7 @@ public class Controller {
         number7.setNumber(4, 3);
         number7.setNumber(4, 4);
 
-        Number number8 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number8 = new co.edu.unbosque.Model.Numeros.Number();
         number8.setNumber(0, 1);
         number8.setNumber(0, 2);
         number8.setNumber(1, 0);
@@ -122,13 +122,13 @@ public class Controller {
         number8.setNumber(4, 3);
         number8.setNumber(4, 4);
 
-        Number number9 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number9 = new co.edu.unbosque.Model.Numeros.Number();
         number9.setNumber(0, 0);
         number9.setNumber(0, 1);
         number9.setNumber(0, 2);
         number9.setNumber(0, 3);
         number9.setNumber(0, 4);
-        number9.setNumber(1,4);
+        number9.setNumber(1, 4);
         number9.setNumber(2, 2);
         number9.setNumber(2, 3);
         number9.setNumber(2, 4);
@@ -139,12 +139,12 @@ public class Controller {
         number9.setNumber(4, 3);
         number9.setNumber(4, 4);
 
-        Number number10 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number10 = new co.edu.unbosque.Model.Numeros.Number();
         number10.setNumber(0, 1);
         number10.setNumber(0, 2);
         number10.setNumber(0, 3);
-        number10.setNumber(1,0);
-        number10.setNumber(1,4);
+        number10.setNumber(1, 0);
+        number10.setNumber(1, 4);
         number10.setNumber(2, 2);
         number10.setNumber(2, 3);
         number10.setNumber(2, 4);
@@ -154,12 +154,12 @@ public class Controller {
         number10.setNumber(4, 2);
         number10.setNumber(4, 3);
 
-        Number number11 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number11 = new co.edu.unbosque.Model.Numeros.Number();
         number11.setNumber(0, 1);
         number11.setNumber(0, 2);
         number11.setNumber(0, 3);
-        number11.setNumber(1,0);
-        number11.setNumber(1,4);
+        number11.setNumber(1, 0);
+        number11.setNumber(1, 4);
         number11.setNumber(2, 3);
         number11.setNumber(2, 4);
         number11.setNumber(3, 0);
@@ -168,7 +168,7 @@ public class Controller {
         number11.setNumber(4, 2);
         number11.setNumber(4, 3);
 
-        Number number13 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number13 = new co.edu.unbosque.Model.Numeros.Number();
         number13.setNumber(0, 0);
         number13.setNumber(0, 1);
         number13.setNumber(0, 2);
@@ -202,13 +202,13 @@ public class Controller {
         inputs[12] = number13.getNumber();
         neuron.train(inputs, objectic, 0.001);
 
-        Number number12 = new Number();
+        co.edu.unbosque.Model.Numeros.Number number12 = new Number();
         number12.setNumber(0, 0);
         number12.setNumber(0, 1);
         number12.setNumber(0, 2);
         number12.setNumber(0, 3);
-        number12.setNumber(1,0);
-        number12.setNumber(1,4);
+        number12.setNumber(1, 0);
+        number12.setNumber(1, 4);
         number12.setNumber(2, 1);
         number12.setNumber(2, 2);
         number12.setNumber(2, 3);
@@ -223,10 +223,10 @@ public class Controller {
 
         System.out.println("Number Example:");
         number12.printNumber();
-        double result = neuron.predict(number12.getNumber());
-        if ( result<= 0) {
+        double result = neuron.predictNumber(number12.getNumber());
+        if (result <= 0) {
             System.out.println("0");
-        }else if (result > 0 && result <= 1){
+        } else if (result > 0 && result <= 1) {
             System.out.println("1");
         } else if (result > 1 && result <= 2) {
             System.out.println("2");
