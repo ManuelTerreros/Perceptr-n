@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
     private NumeroV1 firstNeuron;
     private NumeroV2 secondNeuron;
-    public Controller(){
+
+    public Controller() {
         firstNeuron = new NumeroV1();
         secondNeuron = new NumeroV2();
-
-
     }
-
 
 
 }
