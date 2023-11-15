@@ -52,7 +52,14 @@ function subirImagenes(modeloInfo, label, imagenes) {
     formData.append('folder', modeloInfo.nombreModelo);
     formData.append('name', modeloInfo.temaModelo);
     formData.append('label', label);
+    const extension = file.name.split('.').pop().toLowerCase();
 
+    // Verificar si la extensión es webp
+    if (extension === 'webp') {
+        alert('No se permiten archivos WebP. Por favor, elija otro archivo.');
+        fileInput.value = ''; // Limpiar el valor del campo de entrada para evitar la carga del archivo
+        return;
+    }
     for (var i = 0; i < imagenes.length; i++) {
         formData.append('image', imagenes[i]);
     }
