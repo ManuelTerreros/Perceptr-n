@@ -9,7 +9,9 @@ public class NumeroV2 {
                 7, 7, 7, 7, 7, 7, 7, 7,
                 8, 8, 8, 8, 8, 8, 8, 8,};
 
-        neuron = new SimpleNumberNeuronV2(26);        Number number51 = new Number();
+        neuron = new SimpleNumberNeuronV2(26);
+
+        Number number51 = new Number();
         number51.setNumber(0,0);
         number51.setNumber(0,1);
         number51.setNumber(0,2);

@@ -53,6 +53,7 @@ public class Controller {
         Color peach = new Color(255.0, 218.0, 185.0);
         Color plum = new Color(221.0, 160.0, 221.0);
         Color slateBlue = new Color(106.0, 90.0, 205.0);
+
         double[][] inputs = new double[29][3];
         inputs[0] = this.addColor(white);
         inputs[1] = this.addColor(black);
@@ -112,6 +113,7 @@ public class Controller {
     public double[] addColor(Color color) {
         return new double[]{color.getRed(), color.getGreen(), color.getBlue()};
     }
+
 
     public void saveWeights(String name) {
         File save = new File("models/" + name + ".txt");
