@@ -2,78 +2,82 @@
 <html lang="es">
 
 <head>
-  <title>Numeros Page</title>
-  <link rel="stylesheet" href="style.css">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  </link>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-          crossorigin="anonymous"></script>
-  <script src="js/numeros.js"></script>
+    <title>Reconocimiento de números</title>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    </link>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
 
 <div id="menu">
-  <a href="index.html">Inicio</a>
+    <a href="index.html">Inicio</a>
 </div>
 
 <div class="container">
-  <div id="titulo">Reconocimiento de números del 5 al 9</div>
+    <div id="titulo">Reconocimiento de números 5 a 8</div>
 
-  <div class="row">
-    <!-- Columna de la matriz -->
-    <div class="col-md-6">
-      <p>Seleccione las casillas para la matriz:</p>
-      <div id="matrix">
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div><br>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div><br>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div><br>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div><br>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div>
-        <div class="box" onclick="toggleSelection(this)"></div><br>
-      </div>
-    </div>
+    <div class="row">
+        <!-- Columna de la matriz -->
+        <div class="col-md-6">
+            <p>Seleccione las casillas para la matriz:</p>
+            <div id="matrix">
+                <div class="box" onclick="toggleSelection(this)" data-index="0-0"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="0-1"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="0-2"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="0-3"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="0-4"></div>
+                <br>
+                <div class="box" onclick="toggleSelection(this)" data-index="1-0"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="1-1"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="1-2"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="1-3"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="1-4"></div>
+                <br>
+                <div class="box" onclick="toggleSelection(this)" data-index="2-0"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="2-1"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="2-2"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="2-3"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="2-4"></div>
+                <br>
+                <div class="box" onclick="toggleSelection(this)" data-index="3-0"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="3-1"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="3-2"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="3-3"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="3-4"></div>
+                <br>
+                <div class="box" onclick="toggleSelection(this)" data-index="4-0"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="4-1"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="4-2"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="4-3"></div>
+                <div class="box" onclick="toggleSelection(this)" data-index="4-4"></div>
+                <br>
+            </div>
+        </div>
 
-    <div class="col-md-6">
-      <p>Explicación:</p>
-      <a href="#" class="boton" onclick="clearSelection()">Limpiar matriz</a>
+        <div class="col-md-6">
+            <p id="result"></p>
+            <a href="#" class="boton" id="clear" onclick="clearSelection()">Limpiar matriz</a>
+        </div>
     </div>
-  </div>
-  <div id="botones" class="text-center mt-3">
-    <a href="#" class="boton">Fase de entrenamiento</a>
-    <a href="#" class="boton">Probar aplicativo</a>
-  </div>
+    <div id="botones" class="text-center mt-3">
+        <a href="numeros.html" class="boton">0 a 4</a>
+        <a href="#" id="run" class="boton">Probar aplicativo</a>
+    </div>
 </div>
 
 
 <div id="pie-pagina">
-  Matemáticas aplicadas - Grupo 4
+    Matemáticas aplicadas - Grupo 4
 </div>
 
-<script src="js/numeros.js"></script>
+<script src="js/numeros2.js"></script>
 
 </body>
 

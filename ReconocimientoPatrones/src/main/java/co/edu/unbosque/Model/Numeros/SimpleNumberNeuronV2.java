@@ -6,11 +6,11 @@ import java.util.Random;
 public class SimpleNumberNeuronV2 {
     private double[] weights;
 
-    public SimpleNumberNeuronV2(int weightCount){
+    public SimpleNumberNeuronV2(int weightCount) {
         Random random = new Random();
         weights = new double[weightCount];
         for (int i = 0; i < weights.length; i++) {
-            weights[i] = random.nextDouble(0,10);
+            weights[i] = random.nextDouble(0, 10);
         }
     }
 
@@ -25,12 +25,10 @@ public class SimpleNumberNeuronV2 {
                     prediction = 5;
                 } else if (prediction > 5 && prediction <= 6) {
                     prediction = 6;
-                }  else if (prediction > 6 && prediction <= 7) {
+                } else if (prediction > 6 && prediction <= 7) {
                     prediction = 7;
-                }else if (prediction > 7 && prediction <=8) {
+                } else if (prediction > 7) {
                     prediction = 8;
-                }else if (prediction > 9) {
-                    prediction = 9;
                 }
                 if ((targets[i] == prediction)) {
                     System.out.println("Target: " + targets[i] + " Prediction: " + prediction);
@@ -54,6 +52,7 @@ public class SimpleNumberNeuronV2 {
         System.out.println("Iterations: " + iterations);
 
     }
+
     public double predict(double[] input) {
         double sum = 0;
         for (int i = 0; i < weights.length; i++) {
@@ -74,6 +73,7 @@ public class SimpleNumberNeuronV2 {
         this.weights = weights;
 
     }
+
     public void resetWeights() {
         Random random = new Random();
         weights = new double[weights.length];

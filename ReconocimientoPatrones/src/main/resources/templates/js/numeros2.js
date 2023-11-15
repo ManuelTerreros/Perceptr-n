@@ -15,7 +15,6 @@ function applySelection() {
 
     var matriz = createMatrix();
 
-
     sendMatrix(matriz);
 }
 
@@ -59,7 +58,7 @@ function sendMatrix(matriz) {
             cont++;
         }
     }
-    fetch('http://localhost:8080/api/numbers/result/V1?matriz=' + doubleArray + '', {
+    fetch('http://localhost:8080/api/numbers/result/V2?matriz=' + doubleArray + '', {
         method: 'POST',
     })
         .then(response => response.text())

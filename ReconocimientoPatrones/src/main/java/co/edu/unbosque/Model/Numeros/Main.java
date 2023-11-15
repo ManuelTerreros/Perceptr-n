@@ -2,6 +2,6 @@ package co.edu.unbosque.Model.Numeros;
 
 public class Main {
     public static void main(String[] args) {
-        new NumeroV1();
+        new Controller();
     }
 }

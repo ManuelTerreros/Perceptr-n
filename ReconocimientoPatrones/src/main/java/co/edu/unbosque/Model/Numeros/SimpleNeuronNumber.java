@@ -33,10 +33,12 @@ public class SimpleNeuronNumber {
                     prediction = 0;
                 } else if (prediction > 0 && prediction <= 1) {
                     prediction = 1;
-                }  else if (prediction > 1 && prediction <= 2) {
+                } else if (prediction > 1 && prediction <= 2) {
                     prediction = 2;
-                } else if (prediction > 2) {
+                } else if (prediction > 2 && prediction <= 3) {
                     prediction = 3;
+                } else if (prediction > 3) {
+                    prediction = 4;
                 }
                 if (targets[i] == prediction) {
                     System.out.println("Target: " + targets[i] + " Prediction: " + prediction);
@@ -78,6 +80,7 @@ public class SimpleNeuronNumber {
         }
         return sum;
     }
+
     public void resetWeights() {
         Random random = new Random();
         weights = new double[weights.length];
@@ -85,10 +88,12 @@ public class SimpleNeuronNumber {
             weights[i] = random.nextDouble(0, 10);
         }
     }
+
     public void setWeights(double[] weights) {
         this.weights = weights;
 
     }
+
     public double[] getWeights() {
         return weights;
     }

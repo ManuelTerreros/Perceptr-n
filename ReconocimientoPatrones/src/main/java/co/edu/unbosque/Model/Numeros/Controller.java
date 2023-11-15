@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @Component("numbersController")
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/numbers")
 public class Controller {
     private SimpleNeuronNumber firstNeuron;
@@ -26,16 +26,20 @@ public class Controller {
     public Controller() {
         firstNeuron = new SimpleNeuronNumber(26);
         secondNeuron = new SimpleNumberNeuronV2(26);
-        initializeV1();
-        initializeV2();
+        //initializeV1();
+        //initializeV2();
+        //firstNeuron.setWeights(firstNumber.getWeidt());
+        //secondNeuron.setWeights(secondNumber.getWeidt());
+        //saveWeightsV1("numerosV1");
+        //saveWeightsV2("numerosV2");
     }
 
-    public void initializeV1(){
+    public void initializeV1() {
         firstNumber = new NumeroV1();
 
     }
 
-    public void initializeV2(){
+    public void initializeV2() {
         secondNumber = new NumeroV2();
     }
 
@@ -106,16 +110,101 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
     @PostMapping("/trainNumber/V1")
-    public ResponseEntity<String> trainNumberV1 (@RequestParam("matriz")double[][]newMatriz){
+    public ResponseEntity<String> trainNumberV1(@RequestParam("matriz") double[][] newMatriz) {
         return ResponseEntity.ok().body("Entrenamiento completado");
 
     }
 
     @PostMapping("/trainNumber/V2")
-    public ResponseEntity<String> trainNumberV2 (@RequestParam("matriz")double[][]newMatriz){
+    public ResponseEntity<String> trainNumberV2(@RequestParam("matriz") double[][] newMatriz) {
         return ResponseEntity.ok().body("Entrenamiento completado");
 
+    }
+
+    @PostMapping("/result/V1")
+    public ResponseEntity<String> resultV1(@RequestParam("matriz") String newMatriz) {
+        try {
+            File file = new File("models/numerosV1.txt");
+            StringBuilder sb = new StringBuilder();
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            br.close();
+            fr.close();
+            String[] weights = sb.toString().split("#");
+            double tmp[] = new double[weights.length];
+            for (int i = 0; i < weights.length - 1; i++) {
+                tmp[i] = Double.parseDouble(weights[i]);
+            }
+            firstNeuron.setWeights(tmp);
+            String[] numebers = newMatriz.split(",");
+
+            double[] result = new double[25];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = Double.parseDouble(numebers[i]);
+            }
+            double prediction = firstNeuron.predictNumber(result);
+            if (prediction <= 0) {
+                prediction = 0;
+            } else if (prediction > 0 && prediction <= 1) {
+                prediction = 1;
+            } else if (prediction > 1 && prediction <= 2) {
+                prediction = 2;
+            } else if (prediction > 2 && prediction <= 3) {
+                prediction = 3;
+            } else if (prediction > 3) {
+                prediction = 4;
+            }
+            return ResponseEntity.ok().body("El el numero es " + prediction);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modelo no encontrado");
+        }
+    }
+
+    @PostMapping("/result/V2")
+    public ResponseEntity<String> resultV2(@RequestParam("matriz") String newMatriz) {
+        try {
+            File file = new File("models/numerosV1.txt");
+            StringBuilder sb = new StringBuilder();
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            br.close();
+            fr.close();
+            String[] weights = sb.toString().split("#");
+            double tmp[] = new double[weights.length];
+            for (int i = 0; i < weights.length - 1; i++) {
+                tmp[i] = Double.parseDouble(weights[i]);
+            }
+            firstNeuron.setWeights(tmp);
+            String[] numebers = newMatriz.split(",");
+
+            double[] result = new double[25];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = Double.parseDouble(numebers[i]);
+            }
+            double prediction = secondNeuron.predict(result);
+            if (prediction <= 5) {
+                prediction = 5;
+            } else if (prediction > 5 && prediction <= 6) {
+                prediction = 6;
+            } else if (prediction > 6 && prediction <= 7) {
+                prediction = 7;
+            } else if (prediction > 7) {
+                prediction = 8;
+            }
+            return ResponseEntity.ok().body("El el numero es " + prediction);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modelo no encontrado");
+        }
     }
 
 

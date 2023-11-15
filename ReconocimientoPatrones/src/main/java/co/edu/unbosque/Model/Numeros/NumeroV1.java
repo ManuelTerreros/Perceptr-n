@@ -591,7 +591,7 @@ public class NumeroV1 {
         inputs[37] = number46.getNumber();
         inputs[38] = number47.getNumber();
         inputs[39] = number48.getNumber();
-
+        neuron.train(inputs, objectic, 0.001);
         System.out.println("Number Example:");
         number12.printNumber();
         double result = neuron.predictNumber(number12.getNumber());
@@ -606,6 +606,10 @@ public class NumeroV1 {
         } else {
             System.out.println(result);
         }
+    }
+
+    public double[] getWeidt() {
+        return neuron.getWeights();
     }
 }
 

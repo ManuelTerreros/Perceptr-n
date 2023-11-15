@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component("coloresController")
 @RestController
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/colors")
 public class Controller {
     private final SimpleNeuronColor neuron;

@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @RestController
 @Component("animalsController")
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/images")
 public class Controller {
     private final ImageUtils imageUtils;
