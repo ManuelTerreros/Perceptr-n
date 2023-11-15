@@ -3,16 +3,25 @@ package co.edu.unbosque.Model.Colores;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
 
+@Component("coloresController")
 @RestController
 @CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/colors")
 public class Controller {
-    private final SimpleNeuronColor neuron = new SimpleNeuronColor();
+    private final SimpleNeuronColor neuron = new SimpleNeuronColor(16385);
 
     public Controller() {
+    initialize();
+
+
+    }
+
+    public void initialize(){
         double[] targets = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0};
         double learningRate = 1.0;
         Color white = new Color(255.0, 255.0, 255.0);
@@ -74,13 +83,8 @@ public class Controller {
         inputs[26] = this.addColor(tan);
         inputs[27] = this.addColor(plum);
         inputs[28] = this.addColor(slateBlue);
-        this.neuron.train(inputs, targets, learningRate);
-        Color prueba = new Color(255.0, 204.0, 255.0);
-        double[] input = new double[]{prueba.getRed(), prueba.getGreen(), prueba.getBlue()};
-        System.out.println(this.neuron.predictColor(input));
-        Color darkGreen = new Color(0.0, 51.0, 0.0);
-        double[] input2 = new double[]{darkGreen.getRed(), darkGreen.getGreen(), darkGreen.getBlue()};
-        System.out.println(this.neuron.predictColor(input2));
+        train(inputs, targets, learningRate);
+
     }
 
     public void train(double[][] inputs, double[] targets, double learningRate) {
@@ -107,6 +111,40 @@ public class Controller {
 
     public double[] addColor(Color color) {
         return new double[]{color.getRed(), color.getGreen(), color.getBlue()};
+    }
+
+    public void saveWeights(String name) {
+        File save = new File("models/" + name + ".txt");
+        try {
+            save.createNewFile();
+            double[] weights = neuron.getWeights();
+            FileWriter fw = new FileWriter(save);
+            for (double weight : weights) {
+                fw.write(weight + "#");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/getWeights")
+    public ResponseEntity<String> getWeights(@RequestParam("name") String name) {
+        File file = new File("models/" + name + ".txt");
+        StringBuilder sb = new StringBuilder();
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            br.close();
+            fr.close();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modelo no encontrado");
+        }
+        return ResponseEntity.ok().body(sb.toString());
     }
 }
 

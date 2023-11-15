@@ -3,6 +3,7 @@ package co.edu.unbosque.Model.Animales;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@Component("animalsController")
 @CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/images")
 public class Controller {

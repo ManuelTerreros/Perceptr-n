@@ -4,15 +4,23 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class SimpleNeuronColor {
-    private final double[] weights;
+    private double[] weights;
 
-    public SimpleNeuronColor() {
+    public SimpleNeuronColor(int weightCount) {
         Random random = new Random();
         weights = new double[4];
         for (int i = 0; i < weights.length; i++) {
             weights[i] = random.nextDouble(0, 10);
         }
 
+    }
+
+    public void resetWeights() {
+        Random random = new Random();
+        weights = new double[weights.length];
+        for (int i = 0; i < weights.length; i++) {
+            weights[i] = random.nextDouble(0, 10);
+        }
     }
 
     /**
@@ -73,6 +81,15 @@ public class SimpleNeuronColor {
             }
         }
         return sum;
+    }
+
+    public double[] getWeights() {
+        return weights;
+    }
+
+    public void setWeights(double[] weights) {
+        this.weights = weights;
+
     }
 
 
