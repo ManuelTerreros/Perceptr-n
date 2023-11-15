@@ -89,7 +89,6 @@ public class Controller {
         colorList.add(addColor(tan));
         colorList.add(addColor(plum));
         colorList.add(addColor(slateBlue));
-        // train(inputs, targets, learningRate);
     }
 
     public void train(double[][] inputs, double[] targets, double learningRate) {

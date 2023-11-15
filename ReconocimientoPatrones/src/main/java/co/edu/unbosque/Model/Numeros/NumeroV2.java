@@ -7,7 +7,7 @@ public class NumeroV2 {
         double[] objectic = {5, 5, 5, 5, 5, 5, 5, 5,
                 6, 6, 6, 6, 6, 6, 6, 6,
                 7, 7, 7, 7, 7, 7, 7, 7,
-                8, 8, 8, 8, 8, 8, 8, 8,};
+                8, 8, 8, 8, 8, 8, 8, 8};
 
         neuron = new SimpleNumberNeuronV2(26);
 
