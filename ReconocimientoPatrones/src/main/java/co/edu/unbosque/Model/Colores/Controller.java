@@ -1,56 +1,112 @@
 package co.edu.unbosque.Model.Colores;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+@RestController
+@CrossOrigin(origins = "http://localhost:63342")
+@RequestMapping("/api/colors")
 public class Controller {
-    private final SimpleNeuronColor neuron;
+    private final SimpleNeuronColor neuron = new SimpleNeuronColor();
 
     public Controller() {
-        neuron = new SimpleNeuronColor();
-        double[] targets = new double[]{1, 0, 1, 0, 0, 1, 1, 1, 0};
-        double learningRate = 0.001;
-        Color white = new Color(255, 255, 255);
-        Color black = new Color(0, 0, 0);
-        Color lightBlue = new Color(0, 255, 255);
-        Color darkBlue = new Color(0, 0, 255);
-        Color red = new Color(255, 0, 0);
-        Color green = new Color(0, 255, 0);
-        Color lime = new Color(0, 255, 100);
-        Color yellow = new Color(255, 255, 102);
-        Color purple = new Color(102, 0, 255);
-        double[][] inputs = new double[9][3];
-        inputs[0] = addColor(white);
-        inputs[1] = addColor(black);
-        inputs[2] = addColor(lightBlue);
-        inputs[3] = addColor(darkBlue);
-        inputs[4] = addColor(red);
-        inputs[5] = addColor(green);
-        inputs[6] = addColor(lime);
-        inputs[7] = addColor(yellow);
-        inputs[8] = addColor(purple);
-        neuron.train(inputs, targets, learningRate);
-        co.edu.unbosque.Model.Colores.Color pink = new co.edu.unbosque.Model.Colores.Color(255, 204, 255);
-        double[] input = {pink.red(), pink.green(), pink.blue()};
-        System.out.println(neuron.predictColor(input));
-        co.edu.unbosque.Model.Colores.Color darkGreen = new co.edu.unbosque.Model.Colores.Color(0, 51, 0);
-        double[] input2 = {darkGreen.red(), darkGreen.green(), darkGreen.blue()};
-        System.out.println(neuron.predictColor(input2));
-        co.edu.unbosque.Model.Colores.Color otherBlue = new co.edu.unbosque.Model.Colores.Color(0, 0, 102);
-        double[] input3 = {otherBlue.red(), otherBlue.green(), otherBlue.blue()};
-        System.out.println(neuron.predictColor(input3));
-        System.out.println("------------------------");
+        double[] targets = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0};
+        double learningRate = 1.0;
+        Color white = new Color(255.0, 255.0, 255.0);
+        Color black = new Color(0.0, 0.0, 0.0);
+        Color lightBlue = new Color(0.0, 255.0, 255.0);
+        Color darkBlue = new Color(0.0, 0.0, 255.0);
+        Color red = new Color(255.0, 0.0, 0.0);
+        Color green = new Color(0.0, 255.0, 0.0);
+        Color lime = new Color(0.0, 255.0, 100.0);
+        Color yellow = new Color(255.0, 255.0, 102.0);
+        Color purple = new Color(102.0, 0.0, 255.0);
+        Color orange = new Color(255.0, 165.0, 0.0);
+        Color pink = new Color(255.0, 192.0, 203.0);
+        Color lavender = new Color(230.0, 230.0, 250.0);
+        Color maroon = new Color(128.0, 0.0, 0.0);
+        Color olive = new Color(128.0, 128.0, 0.0);
+        Color teal = new Color(0.0, 128.0, 128.0);
+        Color cyan = new Color(0.0, 255.0, 255.0);
+        Color magenta = new Color(255.0, 0.0, 255.0);
+        Color brown = new Color(139.0, 69.0, 19.0);
+        Color gray = new Color(128.0, 128.0, 128.0);
+        Color lightGray = new Color(211.0, 211.0, 211.0);
+        Color darkGray = new Color(169.0, 169.0, 169.0);
+        Color navy = new Color(0.0, 0.0, 128.0);
+        Color indigo = new Color(75.0, 0.0, 130.0);
+        Color gold = new Color(255.0, 215.0, 0.0);
+        Color sienna = new Color(160.0, 82.0, 45.0);
+        Color tan = new Color(210.0, 180.0, 140.0);
+        Color peach = new Color(255.0, 218.0, 185.0);
+        Color plum = new Color(221.0, 160.0, 221.0);
+        Color slateBlue = new Color(106.0, 90.0, 205.0);
+        double[][] inputs = new double[29][3];
+        inputs[0] = this.addColor(white);
+        inputs[1] = this.addColor(black);
+        inputs[2] = this.addColor(lightBlue);
+        inputs[3] = this.addColor(darkBlue);
+        inputs[4] = this.addColor(red);
+        inputs[5] = this.addColor(green);
+        inputs[6] = this.addColor(lime);
+        inputs[7] = this.addColor(yellow);
+        inputs[8] = this.addColor(purple);
+        inputs[9] = this.addColor(orange);
+        inputs[10] = this.addColor(pink);
+        inputs[11] = this.addColor(lavender);
+        inputs[12] = this.addColor(maroon);
+        inputs[13] = this.addColor(olive);
+        inputs[14] = this.addColor(teal);
+        inputs[15] = this.addColor(brown);
+        inputs[16] = this.addColor(gray);
+        inputs[17] = this.addColor(cyan);
+        inputs[18] = this.addColor(peach);
+        inputs[19] = this.addColor(magenta);
+        inputs[20] = this.addColor(lightGray);
+        inputs[21] = this.addColor(darkGray);
+        inputs[22] = this.addColor(navy);
+        inputs[23] = this.addColor(indigo);
+        inputs[24] = this.addColor(gold);
+        inputs[25] = this.addColor(sienna);
+        inputs[26] = this.addColor(tan);
+        inputs[27] = this.addColor(plum);
+        inputs[28] = this.addColor(slateBlue);
+        this.neuron.train(inputs, targets, learningRate);
+        Color prueba = new Color(255.0, 204.0, 255.0);
+        double[] input = new double[]{prueba.getRed(), prueba.getGreen(), prueba.getBlue()};
+        System.out.println(this.neuron.predictColor(input));
+        Color darkGreen = new Color(0.0, 51.0, 0.0);
+        double[] input2 = new double[]{darkGreen.getRed(), darkGreen.getGreen(), darkGreen.getBlue()};
+        System.out.println(this.neuron.predictColor(input2));
     }
-
 
     public void train(double[][] inputs, double[] targets, double learningRate) {
-        neuron.train(inputs, targets, learningRate);
+        this.neuron.train(inputs, targets, learningRate);
     }
 
-    /**
-     * Converts a given Color object to an array of doubles representing the RGB values.
-     *
-     * @param color the Color object to convert
-     * @return an array of doubles representing the RGB values
-     */
+    @PostMapping("/predictColor")
+    public ResponseEntity<String> predecirColor(@RequestParam("color") int []color){
+        double resultado = neuron.predictColor(new double[]{color[0], color[1], color[2]});
+        try {
+            if(resultado <= 0){
+                return ResponseEntity.ok().body("Se debe usar letra de color Blanco");
+            }else{
+                return ResponseEntity.ok().body("Se debe usar letra de color Negro");
+            }
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Error");
+        }
+
+
+    }
+
+
     public double[] addColor(Color color) {
-        return new double[]{color.red(), color.green(), color.blue()};
+        return new double[]{color.getRed(), color.getGreen(), color.getBlue()};
     }
 }
+

@@ -15,3 +15,4 @@ function clearSelection() {
     selectedBoxes[i].classList.remove("selected");
   }
 }
+
