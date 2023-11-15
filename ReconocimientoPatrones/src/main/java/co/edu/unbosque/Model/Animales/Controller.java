@@ -72,6 +72,7 @@ public class Controller {
     @PostMapping("/addModel")
     public ResponseEntity<String> addModel(@RequestParam("folder") String folder, @RequestParam("learningRate") double learningRate) {
         try {
+            sn.resetWeights();
             createModel(convert("images/" + folder));
             etiquetas = imageUtils.getLabels().stream().mapToDouble(Double::doubleValue).toArray();
             int it = sn.train(entradas, etiquetas, learningRate); // Menor valor de learning rate mejora la predicción, mayor valor de learning rate mejora la velocidad

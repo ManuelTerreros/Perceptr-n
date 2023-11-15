@@ -15,6 +15,14 @@ public class SimpleNeuronImg {
 
     }
 
+    public void resetWeights() {
+        Random random = new Random();
+        weights = new double[weights.length];
+        for (int i = 0; i < weights.length; i++) {
+            weights[i] = random.nextDouble(0, 10);
+        }
+    }
+
     /**
      * Trains the model using the given inputs, targets, and learning rate.
      *
@@ -79,6 +87,7 @@ public class SimpleNeuronImg {
     public double[] getWeights() {
         return weights;
     }
+
     public void setWeights(double[] weights) {
         this.weights = weights;
 
