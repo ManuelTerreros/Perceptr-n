@@ -10,7 +10,7 @@ imageInput.addEventListener('change', preview);
 function preview() {
     var file = imageInput.files[0];
 
-    if (file && file.type.match('image.*')) {
+    if (file && file.type.match('image.*') && file.name.split('.').pop().toLowerCase() !== "webp") {
         var reader = new FileReader();
 
         reader.onload = function (e) {
@@ -31,7 +31,7 @@ function uploadImage() {
     preview.innerHTML = '';
     var file = input.files[0];
 
-    if (!file || !file.type.match('image.*')) {
+    if (!file || !file.type.match('image.*') || file.name.split('.').pop().toLowerCase() === "webp") {
         alert('Selecciona una imagen válida.');
         return;
     }

@@ -8,7 +8,7 @@ public class SimpleNeuronColor {
 
     public SimpleNeuronColor(int weightCount) {
         Random random = new Random();
-        weights = new double[4];
+        weights = new double[weightCount];
         for (int i = 0; i < weights.length; i++) {
             weights[i] = random.nextDouble(0, 10);
         }

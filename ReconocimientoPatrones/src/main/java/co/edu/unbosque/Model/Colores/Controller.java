@@ -7,23 +7,29 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component("coloresController")
 @RestController
 @CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/colors")
 public class Controller {
-    private final SimpleNeuronColor neuron = new SimpleNeuronColor(16385);
+    private final SimpleNeuronColor neuron;
+    private List<double[]> colorList;
+    private List<Double> targetList;
 
     public Controller() {
-    initialize();
-
-
+        neuron = new SimpleNeuronColor(4);
+        initialize();
     }
 
-    public void initialize(){
+    public void initialize() {
         double[] targets = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0};
-        double learningRate = 1.0;
+        targetList = new ArrayList<>();
+        for (double target : targets) {
+            targetList.add(target);
+        }
         Color white = new Color(255.0, 255.0, 255.0);
         Color black = new Color(0.0, 0.0, 0.0);
         Color lightBlue = new Color(0.0, 255.0, 255.0);
@@ -53,80 +59,93 @@ public class Controller {
         Color peach = new Color(255.0, 218.0, 185.0);
         Color plum = new Color(221.0, 160.0, 221.0);
         Color slateBlue = new Color(106.0, 90.0, 205.0);
-
-        double[][] inputs = new double[29][3];
-        inputs[0] = this.addColor(white);
-        inputs[1] = this.addColor(black);
-        inputs[2] = this.addColor(lightBlue);
-        inputs[3] = this.addColor(darkBlue);
-        inputs[4] = this.addColor(red);
-        inputs[5] = this.addColor(green);
-        inputs[6] = this.addColor(lime);
-        inputs[7] = this.addColor(yellow);
-        inputs[8] = this.addColor(purple);
-        inputs[9] = this.addColor(orange);
-        inputs[10] = this.addColor(pink);
-        inputs[11] = this.addColor(lavender);
-        inputs[12] = this.addColor(maroon);
-        inputs[13] = this.addColor(olive);
-        inputs[14] = this.addColor(teal);
-        inputs[15] = this.addColor(brown);
-        inputs[16] = this.addColor(gray);
-        inputs[17] = this.addColor(cyan);
-        inputs[18] = this.addColor(peach);
-        inputs[19] = this.addColor(magenta);
-        inputs[20] = this.addColor(lightGray);
-        inputs[21] = this.addColor(darkGray);
-        inputs[22] = this.addColor(navy);
-        inputs[23] = this.addColor(indigo);
-        inputs[24] = this.addColor(gold);
-        inputs[25] = this.addColor(sienna);
-        inputs[26] = this.addColor(tan);
-        inputs[27] = this.addColor(plum);
-        inputs[28] = this.addColor(slateBlue);
-        train(inputs, targets, learningRate);
-
+        colorList = new ArrayList<>();
+        colorList.add(addColor(white));
+        colorList.add(addColor(black));
+        colorList.add(addColor(lightBlue));
+        colorList.add(addColor(darkBlue));
+        colorList.add(addColor(red));
+        colorList.add(addColor(green));
+        colorList.add(addColor(lime));
+        colorList.add(addColor(yellow));
+        colorList.add(addColor(purple));
+        colorList.add(addColor(orange));
+        colorList.add(addColor(pink));
+        colorList.add(addColor(lavender));
+        colorList.add(addColor(maroon));
+        colorList.add(addColor(olive));
+        colorList.add(addColor(teal));
+        colorList.add(addColor(brown));
+        colorList.add(addColor(gray));
+        colorList.add(addColor(cyan));
+        colorList.add(addColor(peach));
+        colorList.add(addColor(magenta));
+        colorList.add(addColor(lightGray));
+        colorList.add(addColor(darkGray));
+        colorList.add(addColor(navy));
+        colorList.add(addColor(indigo));
+        colorList.add(addColor(gold));
+        colorList.add(addColor(sienna));
+        colorList.add(addColor(tan));
+        colorList.add(addColor(plum));
+        colorList.add(addColor(slateBlue));
+        // train(inputs, targets, learningRate);
     }
 
     public void train(double[][] inputs, double[] targets, double learningRate) {
-        this.neuron.train(inputs, targets, learningRate);
+        neuron.resetWeights();
+        neuron.train(inputs, targets, learningRate);
+        saveWeights("colores");
+    }
+
+    @PostMapping("/trainColor")
+    public ResponseEntity<String> trainColor(@RequestParam("red") int red, @RequestParam("green") int green, @RequestParam("blue") int blue, @RequestParam("learningRate") double learningRate, @RequestParam("target") double target) {
+        colorList.add(addColor(new Color(red, green, blue)));
+        targetList.add(target);
+        double[][] inputs = new double[colorList.size()][3];
+        for (int i = 0; i < colorList.size(); i++) {
+            inputs[i] = colorList.get(i);
+        }
+        double[] targets = new double[targetList.size()];
+        for (int i = 0; i < targetList.size(); i++) {
+            targets[i] = targetList.get(i);
+        }
+        train(inputs, targets, learningRate);
+        return ResponseEntity.ok().body("Entrenamiento completado");
+
     }
 
     @PostMapping("/predictColor")
-    public ResponseEntity<String> predecirColor(@RequestParam("color") int []color){
-        double resultado = neuron.predictColor(new double[]{color[0], color[1], color[2]});
+    public ResponseEntity<Integer> predecirColor(@RequestParam("red") int red, @RequestParam("green") int green, @RequestParam("blue") int blue) {
+        File file = new File("models/colores.txt");
+        StringBuilder sb = new StringBuilder();
         try {
-            if(resultado <= 0){
-                return ResponseEntity.ok().body("Se debe usar letra de color Blanco");
-            }else{
-                return ResponseEntity.ok().body("Se debe usar letra de color Negro");
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
             }
-
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Error");
-        }
-
-
-    }
-
-
-    public double[] addColor(Color color) {
-        return new double[]{color.getRed(), color.getGreen(), color.getBlue()};
-    }
-
-
-    public void saveWeights(String name) {
-        File save = new File("models/" + name + ".txt");
-        try {
-            save.createNewFile();
-            double[] weights = neuron.getWeights();
-            FileWriter fw = new FileWriter(save);
-            for (double weight : weights) {
-                fw.write(weight + "#");
-            }
-            fw.close();
+            br.close();
+            fr.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1);
+        }
+        String[] weights = sb.toString().split("#");
+        double tmp[] = new double[weights.length];
+        for (int i = 0; i < weights.length - 1; i++) {
+            tmp[i] = Double.parseDouble(weights[i]);
+        }
+        neuron.setWeights(tmp);
+        double resultado = neuron.predictColor(new double[]{red, green, blue});
+        try {
+            if (resultado <= 0) {
+                return ResponseEntity.ok().body(0);
+            } else {
+                return ResponseEntity.ok().body(1);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1);
         }
     }
 
@@ -148,5 +167,26 @@ public class Controller {
         }
         return ResponseEntity.ok().body(sb.toString());
     }
+
+    public double[] addColor(Color color) {
+        return new double[]{color.getRed(), color.getGreen(), color.getBlue()};
+    }
+
+
+    public void saveWeights(String name) {
+        File save = new File("models/" + name + ".txt");
+        try {
+            save.createNewFile();
+            double[] weights = neuron.getWeights();
+            FileWriter fw = new FileWriter(save);
+            for (double weight : weights) {
+                fw.write(weight + "#");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
