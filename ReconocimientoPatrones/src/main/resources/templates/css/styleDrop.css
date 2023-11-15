@@ -1,0 +1,30 @@
+
+h2 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+
+#preview {
+    margin-top: 20px;
+}
+
+img {
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+
+.img-thumbnail {
+    max-width: 200px;
+    max-height: 200px;
+}

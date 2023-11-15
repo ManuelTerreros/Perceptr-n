@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/images")
 public class Controller {
     private final ImageUtils imageUtils;
@@ -41,7 +42,7 @@ public class Controller {
      * @return the response entity containing the new file name
      */
     @PostMapping(value = "/uploadImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadImage(@RequestPart("image") List<MultipartFile> images, @RequestParam("folder") String folder, @RequestParam("name") String name, @RequestParam("label") int label) {
+    public ResponseEntity<String> uploadImage(@RequestPart("image") List<MultipartFile> images, @RequestPart("folder") String folder, @RequestPart("name") String name, @RequestPart("label") int label) {
         File folderFile = new File("images/" + folder);
         if (!folderFile.exists()) {
             folderFile.mkdirs();
@@ -114,7 +115,7 @@ public class Controller {
      * @return a ResponseEntity object containing the prediction result
      */
     @PostMapping("/showResult")
-    public ResponseEntity<String> showResult(@RequestPart MultipartFile image, @RequestParam("name") String name) {
+    public ResponseEntity<String> showResult(@RequestPart MultipartFile image, @RequestPart("name") String name) {
         try {
             List<String> lines = Files.readAllLines(Path.of("models/" + name + ".txt"), StandardCharsets.UTF_8);
             StringBuilder sb = new StringBuilder();
@@ -137,7 +138,7 @@ public class Controller {
                 return ResponseEntity.ok().body("Es un animal");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al mostrar el resultado ");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Error al mostrar el resultado ");
         }
     }
 
