@@ -31,19 +31,18 @@ public class Controller {
     public void test() {
         initializeV1();
         initializeV2();
-        firstNeuron.setWeights(firstNumber.getWeidt());
-        secondNeuron.setWeights(secondNumber.getWeidt());
-        saveWeightsV1("numerosV1");
-        saveWeightsV2("numerosV2");
     }
 
     public void initializeV1() {
         firstNumber = new NumeroV1();
-
+        firstNeuron.setWeights(firstNumber.getWeidt());
+        saveWeightsV1("numerosV1");
     }
 
     public void initializeV2() {
         secondNumber = new NumeroV2();
+        secondNeuron.setWeights(secondNumber.getWeidt());
+        saveWeightsV2("numerosV2");
     }
 
     @GetMapping("/getWeightsV1")
@@ -115,15 +114,25 @@ public class Controller {
     }
 
     @PostMapping("/trainNumber/V1")
-    public ResponseEntity<String> trainNumberV1(@RequestParam("matriz") double[][] newMatriz) {
-        return ResponseEntity.ok().body("Entrenamiento completado");
+    public ResponseEntity<String> trainNumberV1() {
+        try {
+            initializeV1();
+            return ResponseEntity.ok().body("Entrenamiento completado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modelo no encontrado");
+        }
+
 
     }
 
     @PostMapping("/trainNumber/V2")
-    public ResponseEntity<String> trainNumberV2(@RequestParam("matriz") double[][] newMatriz) {
-        return ResponseEntity.ok().body("Entrenamiento completado");
-
+    public ResponseEntity<String> trainNumberV2() {
+        try {
+            initializeV2();
+            return ResponseEntity.ok().body("Entrenamiento completado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modelo no encontrado");
+        }
     }
 
     @PostMapping("/result/V1")
@@ -194,7 +203,7 @@ public class Controller {
             double[] result = new double[25];
             for (int i = 0; i < result.length; i++) {
                 result[i] = Double.parseDouble(numebers[i]);
-            
+
             }
             double prediction = secondNeuron.predict(result);
 

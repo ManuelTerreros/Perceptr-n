@@ -70,7 +70,7 @@ function mostrarPesosEnTabla(weights) {
     tabla.appendChild(tbody);
 
     var tablaContainer = document.getElementById('tablaContainer');
-    tablaContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar la nueva tabla
+    tablaContainer.innerHTML = '';
     tablaContainer.appendChild(tabla);
 }
 

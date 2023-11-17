@@ -1,7 +1,9 @@
 const boton = document.getElementById("run");
 const clear = document.getElementById("clear");
+const trainBtn = document.getElementById("train");
 boton.addEventListener("click", applySelection);
 clear.addEventListener("click", clearSelection);
+trainBtn.addEventListener("click", train);
 
 function toggleSelection(element) {
     element.classList.toggle("selected");
@@ -71,6 +73,60 @@ function sendMatrix(matriz) {
         });
 }
 
+function train() {
+    fetch('http://localhost:8080/api/numbers/trainNumber/V1', {
+        method: 'POST',
+    })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("result").innerHTML = data;
+            getWeights();
+        })
+        .catch(error => {
+            console.error('Error al enviar la matriz:', error);
+        });
+}
+
+function getWeights() {
+    fetch('http://localhost:8080/api/numbers/getWeightsV1?name=numerosV1', {
+        method: 'GET',
+    })
+        .then(response => response.text())
+        .then(data => {
+            mostrarPesosEnTabla(data);
+        })
+        .catch(error => {
+            console.error('Error al enviar la matriz:', error);
+        });
+}
+
+function mostrarPesosEnTabla(weights) {
+    var pesosArray = weights.split('#');
+
+    var tabla = document.createElement('table');
+    tabla.classList.add('table', 'table-bordered', 'table-striped', 'table-scroll');
+    var thead = document.createElement('thead');
+    var tbody = document.createElement('tbody');
+
+    var titulo = document.createElement('th');
+    titulo.textContent = 'Pesos';
+    thead.appendChild(titulo);
+    tabla.appendChild(thead);
+
+    pesosArray.forEach(function (peso) {
+        var fila = document.createElement('tr');
+        var celda = document.createElement('td');
+        celda.textContent = peso;
+        fila.appendChild(celda);
+        tbody.appendChild(fila);
+    });
+
+    tabla.appendChild(tbody);
+
+    var tablaContainer = document.getElementById('tablaContainer');
+    tablaContainer.innerHTML = '';
+    tablaContainer.appendChild(tabla);
+}
 
 
 
