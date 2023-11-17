@@ -22,6 +22,7 @@ function clearSelection() {
     var selectedBoxes = document.querySelectorAll(".selected");
     for (var i = 0; i < selectedBoxes.length; i++) {
         selectedBoxes[i].classList.remove("selected");
+        selectedBoxes[i].style.backgroundColor = "";
     }
 }
 

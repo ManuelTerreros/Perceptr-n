@@ -21,13 +21,13 @@ public class SimpleNumberNeuronV2 {
             ok = true;
             for (int i = 0; i < inputs.length; i++) {
                 double prediction = predict(inputs[i]);
-                if (prediction <= 5) {
+                if (prediction <= ((double) 5 / 7)) {
                     prediction = 5;
-                } else if (prediction > 5 && prediction <= 6) {
+                } else if (prediction > ((double) 5 / 7) && prediction <= ((double) 6 / 7)) {
                     prediction = 6;
-                } else if (prediction > 6 && prediction <= 7) {
+                } else if (prediction > ((double) 6 / 7) && prediction <= 1) {
                     prediction = 7;
-                } else if (prediction > 7) {
+                } else if (prediction > 1) {
                     prediction = 8;
                 }
                 if ((targets[i] == prediction)) {

@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -18,20 +20,21 @@ public class Controller {
     private SimpleNumberNeuronV2 secondNeuron;
     private NumeroV1 firstNumber;
     private NumeroV2 secondNumber;
-    private List<Double> numbersListV1;
-    private List<Double> numbersListV2;
-    private List<Double> targetListsV1;
-    private List<Double> targetListsV2;
+
 
     public Controller() {
         firstNeuron = new SimpleNeuronNumber(26);
         secondNeuron = new SimpleNumberNeuronV2(26);
-        //initializeV1();
-        //initializeV2();
-        //firstNeuron.setWeights(firstNumber.getWeidt());
-        //secondNeuron.setWeights(secondNumber.getWeidt());
-        //saveWeightsV1("numerosV1");
-        //saveWeightsV2("numerosV2");
+
+    }
+
+    public void test() {
+        initializeV1();
+        initializeV2();
+        firstNeuron.setWeights(firstNumber.getWeidt());
+        secondNeuron.setWeights(secondNumber.getWeidt());
+        saveWeightsV1("numerosV1");
+        saveWeightsV2("numerosV2");
     }
 
     public void initializeV1() {
@@ -138,7 +141,7 @@ public class Controller {
             fr.close();
             String[] weights = sb.toString().split("#");
             double tmp[] = new double[weights.length];
-            for (int i = 0; i < weights.length - 1; i++) {
+            for (int i = 0; i < weights.length; i++) {
                 tmp[i] = Double.parseDouble(weights[i]);
             }
             firstNeuron.setWeights(tmp);
@@ -151,13 +154,13 @@ public class Controller {
             double prediction = firstNeuron.predictNumber(result);
             if (prediction <= 0) {
                 prediction = 0;
-            } else if (prediction > 0 && prediction <= 1) {
+            } else if (prediction > 0 && prediction <= ((double) 1 / 3)) {
                 prediction = 1;
-            } else if (prediction > 1 && prediction <= 2) {
+            } else if (prediction > ((double) 1 / 3) && prediction <= ((double) 2 / 3)) {
                 prediction = 2;
-            } else if (prediction > 2 && prediction <= 3) {
+            } else if (prediction > ((double) 2 / 3) && prediction <= 1) {
                 prediction = 3;
-            } else if (prediction > 3) {
+            } else if (prediction > 1) {
                 prediction = 4;
             }
             return ResponseEntity.ok().body("El el numero es " + prediction);
@@ -169,7 +172,8 @@ public class Controller {
     @PostMapping("/result/V2")
     public ResponseEntity<String> resultV2(@RequestParam("matriz") String newMatriz) {
         try {
-            File file = new File("models/numerosV1.txt");
+            System.out.println(newMatriz);
+            File file = new File("models/numerosV2.txt");
             StringBuilder sb = new StringBuilder();
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
@@ -179,26 +183,28 @@ public class Controller {
             }
             br.close();
             fr.close();
+            System.out.println(sb.toString());
             String[] weights = sb.toString().split("#");
             double tmp[] = new double[weights.length];
-            for (int i = 0; i < weights.length - 1; i++) {
+            for (int i = 0; i < weights.length; i++) {
                 tmp[i] = Double.parseDouble(weights[i]);
             }
-            firstNeuron.setWeights(tmp);
+            secondNeuron.setWeights(tmp);
             String[] numebers = newMatriz.split(",");
-
             double[] result = new double[25];
             for (int i = 0; i < result.length; i++) {
                 result[i] = Double.parseDouble(numebers[i]);
+            
             }
             double prediction = secondNeuron.predict(result);
-            if (prediction <= 5) {
+
+            if (prediction <= ((double) 5 / 7)) {
                 prediction = 5;
-            } else if (prediction > 5 && prediction <= 6) {
+            } else if (prediction > ((double) 5 / 7) && prediction <= ((double) 6 / 7)) {
                 prediction = 6;
-            } else if (prediction > 6 && prediction <= 7) {
+            } else if (prediction > ((double) 6 / 7) && prediction <= 1) {
                 prediction = 7;
-            } else if (prediction > 7) {
+            } else if (prediction > 1) {
                 prediction = 8;
             }
             return ResponseEntity.ok().body("El el numero es " + prediction);

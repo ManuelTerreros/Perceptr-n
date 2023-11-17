@@ -586,10 +586,11 @@ public class NumeroV2 {
         number12.setNumber(0, 3);
         number12.setNumber(0, 4);
         number12.setNumber(1, 0);
-        number12.setNumber(1, 4);
+        number12.setNumber(2, 0);
         number12.setNumber(2, 1);
         number12.setNumber(2, 2);
         number12.setNumber(2, 3);
+        number12.setNumber(2, 4);
         number12.setNumber(3, 0);
         number12.setNumber(3, 4);
         number12.setNumber(4, 0);
@@ -602,19 +603,16 @@ public class NumeroV2 {
         number12.printNumber();
         double result = neuron.predict(number12.getNumber());
 
-        if (result <= 5) {
-            System.out.println("5");
-        } else if (result <= 6 && result >= 6) {
-            System.out.println("6");
-        } else if (result > 6 && result <= 7) {
-            System.out.println("7");
-        } else if (result > 7 && result <= 8) {
-            System.out.println("8");
-        } else if (result > 8) {
-            System.out.println("9");
-        } else {
-            System.out.println(result);
+        if (result <= ((double) 5 / 7)) {
+            result = 5;
+        } else if (result > ((double) 5 / 7) && result <= ((double) 6 / 7)) {
+            result = 6;
+        } else if (result > ((double) 6 / 7) && result <= 1) {
+            result = 7;
+        } else if (result > 1) {
+            result = 8;
         }
+        System.out.println("El resultado es: " + result);
     }
 
     public double[] getWeidt() {

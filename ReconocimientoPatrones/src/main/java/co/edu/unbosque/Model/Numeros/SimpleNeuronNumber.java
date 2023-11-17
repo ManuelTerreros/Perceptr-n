@@ -31,13 +31,13 @@ public class SimpleNeuronNumber {
                 double prediction = predictNumber(inputs[i]);
                 if (prediction <= 0) {
                     prediction = 0;
-                } else if (prediction > 0 && prediction <= 1) {
+                } else if (prediction > 0 && prediction <= ((double) 1 / 3)) {
                     prediction = 1;
-                } else if (prediction > 1 && prediction <= 2) {
+                } else if (prediction > ((double) 1 / 3) && prediction <= ((double) 2 / 3)) {
                     prediction = 2;
-                } else if (prediction > 2 && prediction <= 3) {
+                } else if (prediction > ((double) 2 / 3) && prediction <= 1) {
                     prediction = 3;
-                } else if (prediction > 3) {
+                } else if (prediction > 1) {
                     prediction = 4;
                 }
                 if (targets[i] == prediction) {
