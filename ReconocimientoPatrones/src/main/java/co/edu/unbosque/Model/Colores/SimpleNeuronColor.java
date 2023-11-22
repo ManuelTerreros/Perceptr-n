@@ -58,6 +58,8 @@ public class SimpleNeuronColor {
                     ok = false;
                 }
             }
+            if(iterations >10000)
+                ok = true;
             iterations++;
         }
         System.out.println("Final weights: " + Arrays.toString(weights));
