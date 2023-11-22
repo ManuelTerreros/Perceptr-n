@@ -31,7 +31,7 @@ function uploadImage() {
     preview.innerHTML = '';
     var file = input.files[0];
 
-    if (!file || !file.type.match('image.*') || file.name.split('.').pop().toLowerCase() === "webp") {
+    if (!file || !file.type.match('image.*') || file.name.split('.').pop().toLowerCase() === "webp" || file.name.split('.').pop().toLowerCase() === "jfif" || file.name.split('.').pop().toLowerCase() === "svg") {
         alert('Selecciona una imagen válida.');
         return;
     }

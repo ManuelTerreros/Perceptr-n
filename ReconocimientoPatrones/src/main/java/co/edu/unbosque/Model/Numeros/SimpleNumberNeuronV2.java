@@ -32,7 +32,6 @@ public class SimpleNumberNeuronV2 {
                 }
                 if ((targets[i] == prediction)) {
                     System.out.println("Target: " + targets[i] + " Prediction: " + prediction);
-                    // System.out.println("Weights: " + Arrays.toString(weights));
                 } else {
                     System.out.println("Calculation error target: " + targets[i] + " prediction: " + prediction);
                     double error = targets[i] - prediction;
@@ -74,12 +73,5 @@ public class SimpleNumberNeuronV2 {
 
     }
 
-    public void resetWeights() {
-        Random random = new Random();
-        weights = new double[weights.length];
-        for (int i = 0; i < weights.length; i++) {
-            weights[i] = random.nextDouble(0, 10);
-        }
-    }
 
 }

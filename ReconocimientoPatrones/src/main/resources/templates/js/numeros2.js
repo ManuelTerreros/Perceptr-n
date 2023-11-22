@@ -14,9 +14,22 @@ function applySelection() {
     for (var i = 0; i < selectedBoxes.length; i++) {
         selectedBoxes[i].style.backgroundColor = "black";
     }
-
     var matriz = createMatrix();
-
+    contin = false;
+    cont = 0;
+    for (var i = 0; i < 5; i++) {
+        for (var j = 0; j < 5; j++) {
+            if (matriz[i][j] === 1) {
+                contin = true;
+                cont++;
+            }
+        }
+    }
+    if (!contin || cont < 3) {
+        alert("No se ha seleccionado ninguna casilla o no ha seleccionado al menos 3");
+        clearSelection();
+        return;
+    }
     sendMatrix(matriz);
 }
 

@@ -21,7 +21,6 @@ document.getElementById('continuarBtn').addEventListener('click', function () {
         progressBar.setAttribute('aria-valuenow', width);
         if (width >= 100) {
             clearInterval(interval);
-
             fetch('http://localhost:8080/api/images/addModel?folder=AnimalesObjetos&learningRate=' + learningRate, {
                 method: 'POST',
             })

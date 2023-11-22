@@ -21,12 +21,7 @@ public class ImageUtils {
         convertOp = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
     }
 
-    /**
-     * Converts an Image object to a BufferedImage object.
-     *
-     * @param image the Image object to be converted
-     * @return the converted BufferedImage object
-     */
+
     public BufferedImage toBufferedImage(Image image) {
         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = bufferedImage.createGraphics();
@@ -36,37 +31,13 @@ public class ImageUtils {
     }
 
 
-    /**
-     * Reads an image from a file, resizes it to 128x128 pixels using a smooth scaling algorithm,
-     * and applies a filter to convert the image to black and white.
-     *
-     * @param path the path to the image file
-     * @return the resulting black and white image
-     */
-    public BufferedImage whiteBlackSingle(String path) {
-        try {
-            BufferedImage image = ImageIO.read(new File(path));
-            Image resizedImage = image.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
-            image = toBufferedImage(resizedImage);
-            return convertOp.filter(image, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public BufferedImage whiteBlackBuffer(BufferedImage image) {
         Image resizedImage = image.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
         image = toBufferedImage(resizedImage);
         return convertOp.filter(image, null);
     }
 
-    /**
-     * Generates an ArrayList of black and white images from the images located in the given path.
-     *
-     * @param path the path to the directory containing the images
-     * @return an ArrayList of BufferedImage objects representing the black and white images
-     */
+
     public ArrayList<BufferedImage> whiteBlack(String path) {
         number = 0;
         ArrayList<BufferedImage> images = new ArrayList<>();

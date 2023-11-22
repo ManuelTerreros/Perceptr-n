@@ -28,10 +28,6 @@ public class Controller {
 
     }
 
-    public void test() {
-        initializeV1();
-        initializeV2();
-    }
 
     public void initializeV1() {
         firstNumber = new NumeroV1();
@@ -221,6 +217,5 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modelo no encontrado");
         }
     }
-
 
 }

@@ -23,14 +23,7 @@ public class SimpleNeuronImg {
         }
     }
 
-    /**
-     * Trains the model using the given inputs, targets, and learning rate.
-     *
-     * @param inputs       the input data for training
-     * @param targets      the target values for training
-     * @param learningRate the learning rate for adjusting weights
-     * @return the number of iterations
-     */
+
     public int train(double[][] inputs, double[] targets, double learningRate) {
         boolean ok = false;
         int iterations = 0;
@@ -66,12 +59,7 @@ public class SimpleNeuronImg {
         return iterations;
     }
 
-    /**
-     * Predicts the output based on the given input array.
-     *
-     * @param input the input array used for prediction
-     * @return the predicted output
-     */
+
     public double predictImg(double[] input) {
         double sum = 0;
         for (int i = 0; i < weights.length; i++) {

@@ -15,13 +15,6 @@ public class SimpleNeuronNumber {
 
     }
 
-    /**
-     * Trains the model using the given inputs, targets, and learning rate.
-     *
-     * @param inputs       the input data for training
-     * @param targets      the target values for training
-     * @param learningRate the learning rate for adjusting weights
-     */
     public void train(double[][] inputs, double[] targets, double learningRate) {
         boolean ok = false;
         int iterations = 0;
@@ -42,7 +35,6 @@ public class SimpleNeuronNumber {
                 }
                 if (targets[i] == prediction) {
                     System.out.println("Target: " + targets[i] + " Prediction: " + prediction);
-                    System.out.println("Weights: " + Arrays.toString(weights));
                 } else {
                     System.out.println("Calculation error");
                     double error = targets[i] - prediction;
@@ -63,12 +55,7 @@ public class SimpleNeuronNumber {
 
     }
 
-    /**
-     * Predicts the output based on the given input array.
-     *
-     * @param input the input array used for prediction
-     * @return the predicted output
-     */
+
     public double predictNumber(double[] input) {
         double sum = 0;
         for (int i = 0; i < weights.length; i++) {
@@ -81,13 +68,6 @@ public class SimpleNeuronNumber {
         return sum;
     }
 
-    public void resetWeights() {
-        Random random = new Random();
-        weights = new double[weights.length];
-        for (int i = 0; i < weights.length; i++) {
-            weights[i] = random.nextDouble(0, 10);
-        }
-    }
 
     public void setWeights(double[] weights) {
         this.weights = weights;

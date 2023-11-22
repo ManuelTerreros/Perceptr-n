@@ -23,13 +23,7 @@ public class SimpleNeuronColor {
         }
     }
 
-    /**
-     * Trains the model using the given inputs, targets, and learning rate.
-     *
-     * @param inputs       the input data for training
-     * @param targets      the target values for training
-     * @param learningRate the learning rate for adjusting weights
-     */
+
     public void train(double[][] inputs, double[] targets, double learningRate) {
         boolean ok = false;
         int iterations = 0;
@@ -58,7 +52,7 @@ public class SimpleNeuronColor {
                     ok = false;
                 }
             }
-            if(iterations >10000)
+            if (iterations > 10000)
                 ok = true;
             iterations++;
         }
@@ -67,12 +61,7 @@ public class SimpleNeuronColor {
 
     }
 
-    /**
-     * Predicts the output based on the given input array.
-     *
-     * @param input the input array used for prediction
-     * @return the predicted output
-     */
+
     public double predictColor(double[] input) {
         double sum = 0;
         for (int i = 0; i < weights.length; i++) {

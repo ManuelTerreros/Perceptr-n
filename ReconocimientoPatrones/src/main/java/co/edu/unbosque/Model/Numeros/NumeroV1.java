@@ -592,20 +592,6 @@ public class NumeroV1 {
         inputs[38] = number47.getNumber();
         inputs[39] = number48.getNumber();
         neuron.train(inputs, objectic, 0.001);
-        System.out.println("Number Example:");
-        number12.printNumber();
-        double result = neuron.predictNumber(number12.getNumber());
-        if (result <= 0) {
-            System.out.println("0");
-        } else if (result > 0 && result <= 1) {
-            System.out.println("1");
-        } else if (result > 1 && result <= 2) {
-            System.out.println("2");
-        } else if (result > 2) {
-            System.out.println("3");
-        } else {
-            System.out.println(result);
-        }
     }
 
     public double[] getWeidt() {
