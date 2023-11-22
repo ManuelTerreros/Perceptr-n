@@ -80,6 +80,7 @@ function sendMatrix(matriz) {
         .then(response => response.text())
         .then(data => {
             document.getElementById("result").innerHTML = data;
+            clearSelection()
         })
         .catch(error => {
             console.error('Error al enviar la matriz:', error);
